@@ -5,6 +5,7 @@ services:
       - SERVICE_FQDN_UPTIMEKUMA_3001
     volumes:
       - '/opt/my-project/uptime-kuma:/app/data'
+      - '/var/run/docker.sock:/var/run/docker.sock'
     healthcheck:
       test:
         - CMD-SHELL
