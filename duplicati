@@ -1,0 +1,25 @@
+services:
+  duplicati:
+    image: 'lscr.io/linuxserver/duplicati:latest'
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - 'TZ=Asia/Ho_Chi_Minh'
+      - 'SETTINGS_ENCRYPTION_KEY=${SERVICE_PASSWORD_ENCRYPT}'
+      - 'DUPLICATI__WEBSERVICE_PASSWORD=${SERVICE_PASSWORD_WEB}'
+    volumes:
+      - './config:/config'
+      - './backups:/backups'
+      - '/opt/my-project:/source'
+      - '/opt/restore-from-duplicati:/restore'
+    ports:
+      - '8200:8200'
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'http://127.0.0.1:8200'
+      interval: 2s
+      timeout: 10s
+      retries: 15
